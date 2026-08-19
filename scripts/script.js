@@ -223,24 +223,73 @@
   /* ---------------------------- */
   /* Contact form                 */
   /* ---------------------------- */
+  /* ---------------------------- */
+  /* Contact form (Formspree)     */
+  /* ---------------------------- */
 
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("formStatus");
 
   if (contactForm) {
-    contactForm.addEventListener("submit", function (event) {
+    contactForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
       const currentLanguage = localStorage.getItem("vortech-lang") || "fr";
-
-      if (formStatus) {
-        formStatus.textContent =
-          currentLanguage === "en"
-            ? "Thank you. Your request has been prepared. Connect this form to your email, WhatsApp or backend service."
-            : "Merci. Votre demande est prête. Connectez ce formulaire à votre service e-mail, WhatsApp ou backend.";
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      
+      // 1. Show loading state
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = currentLanguage === "en" ? "Sending..." : "Envoi en cours...";
       }
+      if (formStatus) formStatus.textContent = "";
 
-      contactForm.reset();
+      try {
+        // 2. Send data to Formspree
+        const response = await fetch(contactForm.action, {
+          method: contactForm.method,
+          body: new FormData(contactForm),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        // 3. Handle Success
+        if (response.ok) {
+          if (formStatus) {
+            formStatus.style.color = "var(--green-dark)";
+            formStatus.textContent = currentLanguage === "en"
+              ? "Thank you! Your message has been sent successfully. We will contact you soon."
+              : "Merci ! Votre message a été envoyé avec succès. Nous vous contacterons très bientôt.";
+          }
+          contactForm.reset();
+        } 
+        // 4. Handle Formspree Errors
+        else {
+          if (formStatus) {
+            formStatus.style.color = "#d93025"; // Red
+            formStatus.textContent = currentLanguage === "en"
+              ? "Oops! There was a problem submitting your form. Please try again or contact us via WhatsApp."
+              : "Oups ! Un problème est survenu. Veuillez réessayer ou nous contacter via WhatsApp.";
+          }
+        }
+      } 
+      // 5. Handle Network Errors
+      catch (error) {
+        if (formStatus) {
+          formStatus.style.color = "#d93025"; // Red
+          formStatus.textContent = currentLanguage === "en"
+            ? "Network error. Please check your connection."
+            : "Erreur réseau. Vérifiez votre connexion.";
+        }
+      } 
+      // 6. Reset button state
+      finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = currentLanguage === "en" ? "Send my request" : "Envoyer ma demande";
+        }
+      }
     });
   }
 })();
