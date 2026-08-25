@@ -145,51 +145,6 @@
   }
 
   /* ---------------------------- */
-  /* Promo modal                  */
-  /* ---------------------------- */
-
-  const promoFloat = document.getElementById("promoFloat");
-  const promoModal = document.getElementById("promoModal");
-
-  function openPromoModal() {
-    if (!promoModal) {
-      return;
-    }
-
-    promoModal.hidden = false;
-    body.classList.add("no-scroll");
-  }
-
-  function closePromoModal() {
-    if (!promoModal) {
-      return;
-    }
-
-    promoModal.hidden = true;
-    body.classList.remove("no-scroll");
-  }
-
-  if (promoFloat) {
-    promoFloat.addEventListener("click", openPromoModal);
-  }
-
-  document.querySelectorAll("[data-close-promo]").forEach(function (element) {
-    element.addEventListener("click", function (event) {
-      if (element.tagName !== "A") {
-        event.preventDefault();
-      }
-
-      closePromoModal();
-    });
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && promoModal && !promoModal.hidden) {
-      closePromoModal();
-    }
-  });
-
-  /* ---------------------------- */
   /* FAQ accordion                */
   /* ---------------------------- */
 
