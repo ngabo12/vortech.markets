@@ -166,7 +166,7 @@ main > #contact {
 }
 
 .divisions-head {
-  max-width: 700px;
+  max-width: 980px;
   margin-bottom: 26px;
 }
 
@@ -1005,6 +1005,7 @@ textarea:focus {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: 42px;
   padding-top: 22px;
+  font-size: small;
 }
 
 .footer-links {
@@ -1025,7 +1026,7 @@ textarea:focus {
 .disclaimer {
   margin: 18px 0 0;
   color: #93a29a;
-  font-size: 0.9rem;
+  font-size: small;
 }
 
 /* Responsive */
