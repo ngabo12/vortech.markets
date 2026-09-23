@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin | The Vortech Letter</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html#home" class="brand" aria-label="Vortech Markets">
+        <img src="assets/logo.webp" alt="Vortech Markets" class="brand-logo">
+      </a>
+
+      <div class="lang-switch" role="group" aria-label="Choix de langue">
+        <button type="button" class="lang-btn active" data-lang="fr">FR</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section-grey">
+      <div class="container admin-box">
+
+        <div class="section-head">
+          <p class="eyebrow" data-fr="Espace privé" data-en="Private area">Espace privé</p>
+          <h1 data-fr="Administration — The Vortech Letter" data-en="Admin — The Vortech Letter">
+            Administration — The Vortech Letter
+          </h1>
+          <p
+            class="lead"
+            data-fr="Écrivez, modifiez et supprimez vos articles, puis exportez le fichier pour le publier sur votre hébergement."
+            data-en="Write, edit and delete your articles, then export the file to publish it on your host."
+          >
+            Écrivez, modifiez et supprimez vos articles, puis exportez le fichier pour le publier sur votre hébergement.
+          </p>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="adminLogin" class="card">
+          <h3 data-fr="Connexion" data-en="Login">Connexion</h3>
+          <div class="form-group">
+            <label for="adminPass" data-fr="Mot de passe" data-en="Password">Mot de passe</label>
+            <input type="password" id="adminPass" autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary" id="adminLoginBtn" type="button" data-fr="Entrer" data-en="Enter">Entrer</button>
+          <p class="form-status" id="loginStatus" role="status"></p>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="adminDash" hidden>
+
+          <div class="admin-toolbar">
+            <button class="btn btn-primary" id="newArticleBtn" type="button" data-fr="+ Nouvel article" data-en="+ New article">+ Nouvel article</button>
+            <button class="btn btn-ghost" id="exportBtn" type="button" data-fr="Exporter articles.json" data-en="Export articles.json">Exporter articles.json</button>
+            <label class="btn btn-ghost" for="importFile" data-fr="Importer un JSON" data-en="Import JSON">Importer un JSON</label>
+            <input type="file" id="importFile" accept=".json" hidden>
+            <button class="btn btn-ghost" id="syncBtn" type="button" data-fr="Synchroniser depuis le site" data-en="Sync from live site">Synchroniser depuis le site</button>
+          </div>
+
+          <p class="small-note" data-fr="Pour publier : exportez articles.json puis remplacez le fichier data/articles.json sur votre hébergement." data-en="To publish: export articles.json then replace data/articles.json on your host.">
+            Pour publier : exportez articles.json puis remplacez le fichier data/articles.json sur votre hébergement.
+          </p>
+
+          <div class="admin-list" id="adminList"></div>
+
+          <!-- EDITOR -->
+          <div id="adminEditor" class="card" hidden>
+            <h3 id="editorTitle">Nouvel article</h3>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fTitleFr">Titre (FR)</label>
+                <input type="text" id="fTitleFr">
+              </div>
+              <div class="form-group">
+                <label for="fTitleEn">Title (EN)</label>
+                <input type="text" id="fTitleEn">
+              </div>
+
+              <div class="form-group">
+                <label for="fCatFr">Catégorie (FR)</label>
+                <input type="text" id="fCatFr" placeholder="Ex : Formation, Analyse, Éditorial">
+              </div>
+              <div class="form-group">
+                <label for="fCatEn">Category (EN)</label>
+                <input type="text" id="fCatEn" placeholder="E.g.: Training, Analysis, Editorial">
+              </div>
+
+              <div class="form-group">
+                <label for="fDate" data-fr="Date de publication" data-en="Publication date">Date de publication</label>
+                <input type="date" id="fDate">
+              </div>
+              <div class="form-group">
+                <label for="fStatus" data-fr="Statut" data-en="Status">Statut</label>
+                <select id="fStatus">
+                  <option value="published" data-fr="Publié" data-en="Published">Publié</option>
+                  <option value="draft" data-fr="Brouillon" data-en="Draft">Brouillon</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label for="fCover" data-fr="Image de couverture (chemin ou URL, optionnel)" data-en="Cover image (path or URL, optional)">Image de couverture (chemin ou URL, optionnel)</label>
+                <input type="text" id="fCover" placeholder="assets/hero/1.webp">
+              </div>
+
+              <div class="form-group full">
+                <label for="fExFr">Résumé (FR)</label>
+                <textarea id="fExFr" rows="2"></textarea>
+              </div>
+              <div class="form-group full">
+                <label for="fExEn">Excerpt (EN)</label>
+                <textarea id="fExEn" rows="2"></textarea>
+              </div>
+
+              <div class="form-group full">
+                <label for="fContentFr" data-fr="Contenu (FR) — sépardez les paragraphes par une ligne vide, ## pour un titre, - pour une liste, **gras**" data-en="Content (FR) — separate paragraphs with an empty line, ## for a heading, - for a list, **bold**">
+                  Contenu (FR) — séparez les paragraphes par une ligne vide, ## pour un titre, - pour une liste, **gras**
+                </label>
+                <textarea id="fContentFr" class="tall" rows="12"></textarea>
+              </div>
+              <div class="form-group full">
+                <label for="fContentEn" data-fr="Contenu (EN) — mêmes règles de formatage" data-en="Content (EN) — same formatting rules">
+                  Contenu (EN) — mêmes règles de formatage
+                </label>
+                <textarea id="fContentEn" class="tall" rows="12"></textarea>
+              </div>
+
+              <div class="form-group full admin-actions">
+                <button class="btn btn-primary" id="saveBtn" type="button" data-fr="Enregistrer" data-en="Save">Enregistrer</button>
+                <button class="btn btn-ghost" id="cancelBtn" type="button" data-fr="Annuler" data-en="Cancel">Annuler</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: 0; margin-top: 0;">
+        <p>© 2026 Vortech Markets — Admin</p>
+        <div class="footer-links">
+          <a href="index.html" data-fr="Retour au site" data-en="Back to site">Retour au site</a>
+          <a href="blog.html" data-fr="Voir le blog" data-en="View blog">Voir le blog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/script.js"></script>
+  <script src="scripts/admin.js"></script>
+</body>
+</html>
