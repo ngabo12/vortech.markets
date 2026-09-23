@@ -40,6 +40,8 @@
     if (pageTitle) {
       document.title = pageTitle;
     }
+
+    document.dispatchEvent(new CustomEvent("vortech:language", { detail: { lang: lang } }));
   }
 
   function detectLanguage() {
